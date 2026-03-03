@@ -1,0 +1,103 @@
+Nest uses external express or fastify like http handler. Do not manage HTTP API's by itself.
+
+@nestjs/common, vast majority of functions, classes that we need from nest
+@nestjs/platform-express, lets nest use express js for handling http requests
+reflect-metadata, helps make decorators work
+
+Pipe -> Guard -> Controller -> Service -> Repository
+
+Modules(bundles code together), Filters, Interceptors
+
+- npx ts-node-dev .\src\main.ts
+
+
+- npm i -g @nestjs/cli
+
+- nest new messages (new project)
+
+- nest generate module messages (new module)
+- nest generate controller messages/messages --flat (--flat prevents creating new folder)
+
+
+Request Data with decorators
+@Headers(), @Body(), @Param('id'), @Query()
+
+
+packages - class-validator, class-transformer
+Inside validation pipe, class-transformer is used to turn the body into instance of DTO class, class-validator is used to validate
+the instance, if error respond immediately or provide body to request handler
+
+
+DI container flow - 
+at startup register all classes with container -> container will figure out what each dependency each class has ->
+we then ask the container to create an instance of a class for us -> container creates all required dependencies and gives us the instance ->
+container will hold onto the created dependency instances and reuse them if needed.
+
+use @Injectable() decorator
+
+
+
+
+
+- nest g module module-name
+- nest g service service-name
+- nest g controller controller-name
+
+
+providers where we lists DI classes
+exports where we want to export DI classes to other modules (on contrary, you have to import module on the DI module where you want to use service)
+
+The DI (Dependency Injection) container in NestJS is an internal runtime system, also known as the IoC (Inversion of Control) container, that manages the creation, configuration, and lifecycle of application components (called providers) and resolves their dependencies automatically.
+
+
+typeorm - SQLite, postgres, MySQL, Mongodb
+mongoose - mongodb
+
+
+Creating Entity
+- Create an entity file and create a class in it that lists all the properties that your entity will have
+- Connect the entity to its parent module. This creates a repository
+- Connect the entity to the root connection (in app module)
+
+
+save() vs insert(),update()  -> In later case hooks will not get executed (one hook, whether it is an email or not)
+remove() vs delete() ->  In later case hooks will not get executed
+we can make applications without save() and remove(), but hooks won't be there
+
+
+Partial<User> - no properties,atleast one properties or all properties of generic type User is "Partial"
+
+exception filters - not covered in this course
+
+
+Signup flow --> user's password + salt ---> Hashing function --> hash  --> hash.salt (store this in db)
+Signin flow --> hash.salt (. is seperator) (from db) --> get salt and combine with user's input password --> hashing function --> hash (compare this hash with password(hash part) stored in db)
+
+
+
+Cookie-session library looks at cookie header -> cookie-session decodes the string, resulting in an object ->
+we get access to session object in a request handler using a decorator -> we add/remove/change properties on the session object ->
+cookie-session sees the updated session and turns it into an encrypted string -> string sent back in the set-cookie header on response object.
+
+
+The never datatype is a special type in TypeScript that represents the type of values that never occur.
+
+Uptil now we implemented
+- handler to sign up
+- handler to sign in
+- handler to sign out
+- handler to return currently signed in user
+- reject requests to certain handlers if the user is not signed in (guard)
+- automatically tell a handler who the currently signed in user is (interceptor)
+
+
+Unit testing - test each class
+integration testing - test full flow
+
+Nest Docs says multiple .env files are ok
+Dotenv Docs says never create more than one .env file
+
+--maxWorkers=1 (this jest FLAG means run one test file once)
+
+-- Association(with Nest and TypeORM) - relating one record with another(in nest world) (eg one-to-one or many-to-one/one-to-many)
+association donot fetch associated properties by default
