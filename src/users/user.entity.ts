@@ -12,6 +12,9 @@ export class User {
     @Column()
     password:string;
 
+    @Column({ default: true })
+    admin: boolean;
+
     // association donot fetch associated properties by default
     // function below is just there to solve circular dependency issue, second argument helps to get back to current entity
     @OneToMany(() => Report,(report) => report.user)

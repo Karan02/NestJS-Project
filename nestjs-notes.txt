@@ -101,3 +101,14 @@ Dotenv Docs says never create more than one .env file
 
 -- Association(with Nest and TypeORM) - relating one record with another(in nest world) (eg one-to-one or many-to-one/one-to-many)
 association donot fetch associated properties by default
+
+
+				   v <- Interceptor -> v   										
+Request -> Middlewares -> Guards  --> Request Handler  --> Interceptor -> Response
+
+In our nest app
+				      v  <-Current User Interceptor ->v 	 							
+Request -> Cookie-Session Middleware -->     Admin Guard             --> Request Handler -> Response
+
+We will transform to following from above
+Request -> Cookie-Session-Middleware -> CurrentUserMiddleware -> Admin Guard -> Request Handler
