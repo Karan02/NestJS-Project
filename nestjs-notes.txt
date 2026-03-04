@@ -137,3 +137,6 @@ TypeORM-cli is used for running migrations
 - npm install pg (postgres)
 - heroku auth:whoami
 - heroku addons:create heroku-postgresl:hobby-dev
+- heroku config:set COOKIE_KEY=asdasd
+- heroku config:set NODE_ENV=production
+- git push Heroku master
