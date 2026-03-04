@@ -1,11 +1,12 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { Module } from '@nestjs/common';
+// import { APP_INTERCEPTOR } from '@nestjs/core';
+import { Module, MiddlewareConsumer } from '@nestjs/common';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
 import { AuthService } from './auth.service';
-import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
+// import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
+import { CurrentUserMiddleware } from './middlewares/current-user.middleware';
 
 @Module({
   imports:[TypeOrmModule.forFeature([User])], //creates repository for us
@@ -13,9 +14,15 @@ import { CurrentUserInterceptor } from './interceptors/current-user.interceptor'
   providers: [
     UsersService,
     AuthService,
-    {
-    provide:APP_INTERCEPTOR, 
-    useClass: CurrentUserInterceptor // This is now globally set interceptor
-  }]
+  //   {
+  //   provide:APP_INTERCEPTOR, 
+  //   useClass: CurrentUserInterceptor // This is now globally set interceptor
+  // }
+]
 })
-export class UsersModule {}
+export class UsersModule {
+  //comment currentuserinterceptor
+  configure(consumer:MiddlewareConsumer){
+    consumer.apply(CurrentUserMiddleware).forRoutes('*'); // * means for all routes
+  }
+}

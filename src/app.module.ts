@@ -45,6 +45,7 @@ const cookieSession =  require('cookie-session');
   }],
 })
 export class AppModule {
+  // global middleware
   configure(consumer: MiddlewareConsumer){
     consumer.apply(cookieSession({
       keys: ['asdsd']
