@@ -31,26 +31,26 @@ describe('Authentication System (e2e)', () => {
         }); 
   });
 
-  it('signup as a new user then get the currently logged in user', async () => {
-      const email = 'asdf@asdf.com';
-      const res = await request(app.getHttpServer())
-      .post('/auth/signup')
-      .send({email,password:'asdf'})
-      .expect(201)
+it('signup as a new user then get the currently logged in user', async () => {
+  const email = 'asdf@asdf.com';
 
-      const signin = await request(app.getHttpServer())
-      .post('/auth/signin')
-      .send({email,password:'asdf'})
-      .expect(201)
+  await request(app.getHttpServer())
+    .post('/auth/signup')
+    .send({ email, password: 'asdf' })
+    .expect(201);
 
-      const cookie = signin.get('Set-Cookie') as string[];
+  const signin = await request(app.getHttpServer())
+    .post('/auth/signin')
+    .send({ email, password: 'asdf' })
+    .expect(201);
 
-  
-      const {body} = await request(app.getHttpServer())
-      .get('/auth/whoami')
-      .set('Cookie',cookie)
-      .expect(200)
+  const cookie = signin.headers['set-cookie'];
 
-      expect(body.email).toEqual(email);
-  })
+  const { body } = await request(app.getHttpServer())
+    .get('/auth/whoami')
+    .set('Cookie', cookie)
+    .expect(200);
+
+  expect(body.email).toEqual(email);
+});
 });

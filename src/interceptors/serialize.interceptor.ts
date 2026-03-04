@@ -7,7 +7,6 @@ import {
 import { Observable } from 'rxjs'
 import { map } from 'rxjs'
 import { plainToClass } from 'class-transformer'
-import { UserDto } from 'src/users/dtos/user.dto'
 
 // this interface means any class
 interface ClassConstructor {

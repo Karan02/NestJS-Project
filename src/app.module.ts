@@ -6,8 +6,8 @@ import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule,ConfigService } from '@nestjs/config';
-import { User } from './users/user.entity';
-import { Report } from './reports/report.entity';
+
+import { AppDataSource } from '../data-source';
 const cookieSession =  require('cookie-session');
 
 @Module({
@@ -17,17 +17,20 @@ const cookieSession =  require('cookie-session');
       isGlobal:true,
       envFilePath:`.env.${process.env.NODE_ENV}`
     }),
-    TypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory:(config:ConfigService) =>{
-        return {
-          type:'sqlite',
-          database:config.get<string>('DB_NAME'),
-          synchronize:true, //for only development, create new columns according to changes in entity (normally we write migration)
-          entities: [User,Report],
-        }
-      }
+    TypeOrmModule.forRoot({
+      ...AppDataSource.options,
     }),
+    // TypeOrmModule.forRootAsync({
+    //   inject: [ConfigService],
+    //   useFactory:(config:ConfigService) =>{
+    //     return {
+    //       type:'sqlite',
+    //       database:config.get<string>('DB_NAME'),
+    //       synchronize:true, //for only development(production not recommendable), create/delete columns according to changes in entity (normally we write migration)
+    //       entities: [User,Report],
+    //     }
+    //   }
+    // }),
   //   TypeOrmModule.forRoot({
   //   type:'sqlite',
   //   database: 'db.sqlite',
@@ -45,10 +48,12 @@ const cookieSession =  require('cookie-session');
   }],
 })
 export class AppModule {
+  constructor(private configService:ConfigService){}
   // global middleware
   configure(consumer: MiddlewareConsumer){
-    consumer.apply(cookieSession({
-      keys: ['asdsd']
+    consumer.apply(
+      cookieSession({
+        keys: this.configService.get('COOKIE_KEY')
     })).forRoutes('*');
   }
 }

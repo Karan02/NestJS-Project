@@ -103,12 +103,36 @@ Dotenv Docs says never create more than one .env file
 association donot fetch associated properties by default
 
 
+- Normal flow of nestjs app:
+
 				   v <- Interceptor -> v   										
 Request -> Middlewares -> Guards  --> Request Handler  --> Interceptor -> Response
 
-In our nest app
+- In our nest app
 				      v  <-Current User Interceptor ->v 	 							
 Request -> Cookie-Session Middleware -->     Admin Guard             --> Request Handler -> Response
 
 We will transform to following from above
 Request -> Cookie-Session-Middleware -> CurrentUserMiddleware -> Admin Guard -> Request Handler
+
+
+
+
+TypeORM-cli is used for running migrations
+
+ (TypeORM v0.3.x)
+
+- npm install -g ts-node
+- "typeorm":"node --require ts-node/register ./node_modules/typeorm/"
+- npm run typeorm migration:run
+
+
+
+- npm run typeorm migration:generate ./src/migrations/initial-schema -d ./src/data-source.ts -o (-o is to generate js file)
+- npm run typeorm -- migration:run -d data-source.ts
+
+
+
+
+- npm install pg (postgres)
+- heroku auth:whoami

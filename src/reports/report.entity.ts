@@ -1,5 +1,5 @@
 import {Entity, Column,  PrimaryGeneratedColumn,ManyToOne } from 'typeorm'
-import { User } from 'src/users/user.entity';
+import { User } from '../users/user.entity';
 @Entity()
 // under the hood, entity creates repository for us
 export class Report {
