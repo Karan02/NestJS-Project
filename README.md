@@ -13,3 +13,4 @@
 -   Understand Nest's special request-response cycle
 -   Model your app's data using TypeORM entities
 -   Use decorators to dramatically simplify your code
+-   typescript notes also attached
