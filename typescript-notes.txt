@@ -1,0 +1,56 @@
+- npm install -g typescript ts-node
+
+
+- tsc index.ts
+- node index.js
+
+or 
+
+- ts-node index.ts
+
+latest
+
+- npm i -D tsx
+- npx tsx index.ts
+
+
+Types: 
+1) Primitive types: number, Boolean, void, undefined, string, symbol, null
+2) Object types: functions, arrays, classes, objects
+
+
+- Large project Typescript gives an idea what kind of data is flowing.
+
+
+
+- Type annotations - code we add to tell typescript what type of value a variable will refer to
+- Type inference - Typescript tries to figure out what type of value a variable refers to
+
+
+
+- If declaration and initialization are on the same line, Typescript will figure out the type of 'color' for us
+
+// below is annotation as well as destructuring
+const { age }: { age: number} = profile;
+
+modifier - public, private, protected
+
+
+generate fake data, 
+- npm install @faker-js/faker@7.6.0 
+- import { faker } from "@faker-js/faker";
+
+
+typescript code -> type definition file -> JS Library
+
+- npm i @types/faker
+
+
+- A <script type="module"> tag in HTML is used to tell the browser to treat the embedded or external JavaScript file as an ECMAScript (ES) module, which enables modern JavaScript module features like import and export.
+
+Gatekeeper interface for a function, checks for arguments satisfies the required fields.(implicit type checks)
+
+
+	Typical Typescript File
+- Interface Definitions
+- Class Definition
